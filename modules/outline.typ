@@ -1,7 +1,8 @@
 #import "@preview/pointless-size:0.1.2": zh
 
 // 目录
-#let outline_with_sizes(depth: 3, font_sizes: (), font: "FandolSong", title-font: "FandolHei") = {
+#let outline_with_sizes(depth: 3, font_sizes: (), font: "FandolSong", title-font: "FandolHei", title-size: zh(2)) = {
+  set par(first-line-indent: 0pt)
   assert(depth == font_sizes.len(), message: "字体大小数组长度必须与目录深度相等")
 
   show outline.entry: it => {
@@ -15,7 +16,7 @@
     }
   }
 
-  align(center, text(font: title-font, zh(2))[目 ~ 录])
+  align(center, text(font: title-font, title-size)[目 ~ 录])
 
   v(-1em)
 

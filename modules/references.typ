@@ -7,14 +7,18 @@
   style: "gb-7714-2015-numeric",
   font: ("TeX Gyre Termes", "FandolSong"),
   title-font: ("TeX Gyre Termes", "FandolHei"),
+  outlined: false,
+  title-size: zh(2),
 ) = {
   pagebreak()
 
-  align(center, text(
-    font: title-font,
-    size: zh(2),
-    weight: "bold",
-  )[#title])
+  if outlined {
+    show heading: set align(center)
+    show heading: set text(font: title-font, size: title-size, weight: "bold")
+    heading(level: 1, numbering: none, title)
+  } else {
+    align(center, text(font: title-font, size: title-size, weight: "bold", title))
+  }
 
   v(2em)
 

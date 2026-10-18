@@ -10,7 +10,14 @@
 .
 ├── main.typ                  # 唯一编译入口：顶部基础配置，下方正文
 ├── config.typ                # 模板高级配置与 report 组装函数
-├── presets/course-report.typ # 默认课程报告配置集
+├── presets/
+│   ├── course-report.typ     # 默认课程报告配置集
+│   └── cs-thesis.typ         # 计算机学院本科毕业设计配置集
+├── examples/                # 各配置集的示例源码与 PDF
+│   ├── course-report.typ
+│   ├── course-report.pdf
+│   ├── cs-thesis.typ
+│   └── cs-thesis.pdf
 ├── references.bib            # BibLaTeX 文献数据库
 ├── fonts/                    # 内置开源字体、许可及使用说明
 ├── Makefile                  # 自动传入字体目录的编译入口
@@ -19,15 +26,18 @@
 └── modules/
     ├── page_settings.typ     # 页面设置
     ├── header.typ            # 页眉内容
-    ├── cover.typ             # 封面
+    ├── cover.typ             # 课程报告 / 论文封面与共用字段标签
     ├── outline.typ           # 目录
     ├── figure_setup.typ      # 图片排版与辅助函数
     ├── code_setup.typ        # 代码块排版
     ├── references.typ        # 原生 bibliography 的排版封装
-    └── appendix.typ          # 自动编号的附录页
+    ├── appendix.typ          # 自动编号的附录页
+    └── thesis.typ            # 论文专用布局与前置页
 ```
 
 ## 快速开始
+
+可先预览 [课程报告示例](examples/course-report.pdf) 和 [本科毕业设计示例](examples/cs-thesis.pdf)。对应 `.typ` 源码位于同一目录，在项目根目录执行 `make examples` 可重新生成两份 PDF。
 
 1. 默认直接使用 `course-report` 配置集；需要自定义时，取消 `main.typ` 顶部配置和 `report.with` 中对应参数的注释，再修改字段。
 2. 在同一文件的 `#show: report.with(...)` 下方编写正文。
@@ -38,7 +48,7 @@
 typst compile --font-path fonts main.typ output.pdf
 ```
 
-`report` 自动按“封面 → 目录 → 正文 → 参考文献 → 附录”组装文档，无需在正文末尾另加参考文献或附录函数。
+默认 `course-report` 按“封面 → 目录 → 正文 → 参考文献 → 附录”组装文档；`cs-thesis` 还提供声明、中英文摘要和致谢。
 
 ## main.typ：基础配置与正文
 
@@ -64,6 +74,67 @@ typst compile --font-path fonts main.typ output.pdf
 封面、目录、文献配置按字段覆盖配置集，未提供的字段保留默认值；附录数组整体替换，`auto` 表示沿用配置集，`()` 表示关闭附录。目录深度与字号数组仍需匹配。示例中的 `#show` 用于替换原有调用，不要重复应用模板。
 
 新增配置集时，在 `presets/` 新建 `.typ` 文件并导出包含 `cover`、`outline`、`references`、`appendices` 的字典，然后在 `config.typ` 导入并注册到 `presets` 字典。通过 `preset: "配置集名称"` 选择；未知名称会报错。
+
+### cs-thesis：本科毕业设计
+
+该配置集参考 [HUST-CS-Thesis 的类文件](https://github.com/zeyuanyin/HUST-CS-Thesis/blob/main/HustGraduPaper.cls)及其 [sample.tex](https://github.com/zeyuanyin/HUST-CS-Thesis/blob/main/sample.tex)，采用独立论文布局，默认配置集仍为 `course-report`。
+
+| 项目 | `cs-thesis` 行为 |
+| --- | --- |
+| 结构 | 封面 → 可选声明 → 中文摘要 → 英文摘要 → 目录 → 正文 → 可选致谢 → 参考文献 → 附录。 |
+| 封面 | “本科生毕业设计”、论文题目、院系、专业班级、姓名、学号、指导教师和日期；不显示课程名称。 |
+| 页面 | A4；左、右 1.25in，上 1.28in，下 1.06in。 |
+| 页眉页脚 | 红色楷体“华中科技大学毕业设计”、蓝色双线，页码两侧有横线；封面和声明不显示页眉页码。 |
+| 页码 | 摘要和目录使用 I、II、III；正文重新从 1 开始，目录链接和页码随之更新。 |
+| 正文 | 小四（12pt）、两字首行缩进、两端对齐；Typst 行间距设为 `0.8em`。 |
+| 标题 | 自动编号 1、1.1、1.1.1；一级居中、小二（18pt）、另起一页，二级四号（14pt）、三级小四（12pt）。 |
+| 图表 | 按章重置，编号如“图 1-1”“表 2-1”，表题在上、图题在下。表格需包在 `figure(table(...), caption: ...)` 中。 |
+| 目录 | 默认收录两级，与参考项目的示例一致；摘要、致谢、参考文献和附录也进入目录。 |
+| 文献 | 默认使用内置 `gb-7714-2005-numeric`（上标引用），对应参考项目示例；可覆盖为 `gb-7714-2015-numeric`。 |
+| 字体 | 使用本项目内置 Fandol / TeX Gyre Termes，无文字描边。 |
+
+在 `main.typ` 中替换现有的 `#show: report.with(...)`：
+
+```typst
+#show: report.with(
+  preset: "cs-thesis",
+  cover: (
+    title: [毕业设计题目],
+    name: [张三],
+    college: [计算机科学与技术学院],
+  ),
+  front-matter: (
+    abstract-zh: [中文摘要正文。],
+    keywords-zh: ("关键词一", "关键词二"),
+    abstract-en: [English abstract.],
+    keywords-en: ("keyword one", "keyword two"),
+  ),
+  acknowledgments: [致谢正文。],
+  appendices: ((title: [实验数据], body: [补充材料。]),),
+)
+
+= 绪论
+
+== 研究背景
+
+正文内容。
+```
+
+切换时请删除原正文标题中手写的“1.”、“1.1”等编号，直接写 `= 绪论`、`== 研究背景`，避免重复编号。封面、目录、文献和 `front-matter` 均按字段覆盖。将 `abstract-zh` 或 `abstract-en` 设为 `none` 可隐藏对应摘要；关键词为字符串数组。`statement`、`acknowledgments` 默认为 `none`，传入内容即可启用，`auto` 沿用配置集。
+
+声明内容由使用者提供，例如 `statement: [#include "/statement.typ"]`；这里不预填原创性或授权声明，也不自动填写签名。附录默认为空；如需“大学期间发表或提交的论文”，可作为一篇带标题的附录传入。
+
+完整示例在 `examples/cs-thesis.typ`，从项目根目录编译：
+
+```bash
+typst compile --root . --font-path fonts examples/cs-thesis.typ examples/cs-thesis.pdf
+```
+
+`config.typ` 中的 `thesis_config` 控制论文页边距、行间距和标题字号；其中 `cover` 控制封面各区域距纸张顶部的目标位置、信息栏行距和区域最小间隔 `min-gap`。封面按 [参考项目 PDF 首页](https://www.overleaf.com/latex/templates/hust-cs-thesis/bsmgrypbwyxs.pdf) 调整校名、标题、信息栏和日期布局，字段标签两端对齐、下划线等长。长标题与长字段自动换行，后续区域按实际高度顺延；内容超过一页容量时会提示缩短内容或调整间距。`page_config` 继续用于课程报告。
+
+实现上参考 [werifu/HUST-typst-template 的封面模块](https://github.com/werifu/HUST-typst-template/blob/main/pages/paper-cover.typ) 的顺序布局与信息栏组织方式，使用本项目 `modules/cover.typ` 中的 `thesis-cover` 和共用 `cover-label` 实现，保留已有字体、字号、目录、代码块、文献和附录工具，不引入该项目的伪粗体或其他依赖。其公开示例默认选择网安配置，本项目仍保持 `cs-thesis` 的计院封面比例。
+
+这里移植的是参考项目的主要结构与排版约定；Typst 的行距模型、开源字体和 CSL 文献排版与 LaTeX 不完全相同，不保证逐像素复现，参考项目的专用算法、定理等 LaTeX 环境也未移植。
 
 ### 封面
 
@@ -214,7 +285,7 @@ func main() {
 | `bibliography_config.font` | 当前方案的西文 + 宋体 | 文献正文字体。 |
 | `bibliography_config.title-font` | 当前方案的西文 + 黑体 | 文献标题字体。 |
 
-`report(preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto, body)` 是模板入口，接收配置集名称、基础配置覆盖值和正文。通过 `#show: report.with(...)` 使用，`body` 由 Typst 自动传入。配置集注册和全局排版规则均在此文件维护。
+`report(preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto, front-matter: (:), statement: auto, acknowledgments: auto, body)` 是模板入口。后三组前置页 / 致谢参数用于 `cs-thesis`；`body` 由 `#show: report.with(...)` 自动传入。配置集注册和全局排版规则均在此文件维护。
 
 底层模块也可以单独导入使用；使用 `report` 时不需要重复应用它们：
 

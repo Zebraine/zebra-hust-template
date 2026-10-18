@@ -6,9 +6,12 @@
 #import "modules/references.typ": references-page
 #import "modules/appendix.typ": appendix-pages
 #import "presets/course-report.typ": course-report
+#import "presets/cs-thesis.typ": cs-thesis
+#import "modules/thesis.typ": thesis-report
 
 #let presets = (
   "course-report": course-report,
+  "cs-thesis": cs-thesis,
 )
 
 #let font_config = (
@@ -37,13 +40,41 @@
   size: 18pt,
 )
 
-#let report(preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto, body) = {
+#let thesis_config = (
+  margin: (left: 1.25in, right: 1.25in, top: 1.28in, bottom: 1.06in),
+  leading: 0.8em,
+  heading-sizes: (18pt, 14pt, 12pt),
+  cover: (
+    logo-top: 151pt,
+    heading-top: 221pt,
+    title-top: 326pt,
+    fields-top: 441pt,
+    row-height: 46.656pt,
+    date-top: 703pt,
+    min-gap: 18pt,
+  ),
+)
+
+#let report(
+  preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto,
+  front-matter: (:), statement: auto, acknowledgments: auto, body,
+) = {
   assert(preset in presets, message: "未知配置集：" + preset)
   let defaults = presets.at(preset)
   let cover = defaults.cover + cover
   let outline = defaults.outline + outline
   let references = defaults.references + references
   let appendices = if appendices == auto { defaults.appendices } else { appendices }
+
+  if defaults.at("layout", default: "course-report") == "cs-thesis" {
+    return thesis-report(
+      cover, outline, references, appendices,
+      defaults.front-matter + front-matter,
+      if statement == auto { defaults.statement } else { statement },
+      if acknowledgments == auto { defaults.acknowledgments } else { acknowledgments },
+      font_config, thesis_config, bibliography_config, appendix_style, body,
+    )
+  }
 
   show: page-setup.with(..page_config)
   show: figure_setup.with(font: (font_config.latin, font_config.hei))
