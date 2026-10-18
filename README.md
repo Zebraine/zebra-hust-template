@@ -22,7 +22,8 @@
     ├── outline.typ           # 目录
     ├── figure_setup.typ      # 图片排版与辅助函数
     ├── code_setup.typ        # 代码块排版
-    └── references.typ        # 原生 bibliography 的排版封装
+    ├── references.typ        # 原生 bibliography 的排版封装
+    └── appendix.typ          # 自动编号的附录页
 ```
 
 ## 快速开始
@@ -36,7 +37,7 @@
 typst compile --font-path fonts main.typ output.pdf
 ```
 
-`report` 自动按“封面 → 目录 → 正文 → 参考文献”组装文档，无需在正文末尾另加参考文献函数。
+`report` 自动按“封面 → 目录 → 正文 → 参考文献 → 附录”组装文档，无需在正文末尾另加参考文献或附录函数。
 
 ## main.typ：基础配置与正文
 
@@ -112,6 +113,30 @@ typst compile --font-path fonts main.typ output.pdf
 
 编号和参考文献列表由 Typst 联动生成，默认使用内置的 `gb-7714-2015-numeric` 样式，无需运行 BibTeX 或 Biber。更多字段和引用机制见 [Typst bibliography 文档](https://typst.app/docs/reference/model/bibliography/)。仓库内文献为演示数据，正式报告请替换为实际来源。
 
+### 附录
+
+在 `main.typ` 顶部的 `appendices_config` 中填写附录，按数组顺序自动生成“附录 A”“附录 B”…“附录 Z”标题。每篇附录另起一页，标题居中、黑体、小二（18pt），使用原生粗体，不添加描边，并自动收录进目录。
+
+```typst
+#let appendices_config = (
+  (body: [第一篇附录内容。],),
+  (
+    title: [实验数据],
+    body: [
+      第二篇附录内容。
+
+      == 数据说明
+
+      这里可以插入表格、图片或代码。
+    ],
+  ),
+)
+```
+
+每个字典的 `body` 是附录正文，`title` 可选：省略时仅显示“附录 A”，填写时显示“附录 B 实验数据”。单篇附录也要保留数组末尾的逗号；不需要附录时设为 `()`，不会产生空白附录页。超过 26 篇时按 Typst 字母编号继续为 AA、AB 等。附录内部小节从 `==` 开始，避免额外生成一级标题。
+
+这一组织方式参照 [HUST-CS-Thesis 的附录设置](https://github.com/zeyuanyin/HUST-CS-Thesis/blob/main/HustGraduPaper.cls)。附录内容仍集中在 `main.typ`，通过 `report.with(appendices: appendices_config, ...)` 传入；附录标题字体和字号在 `config.typ` 的 `appendix_style` 中调整。
+
 ### 正文与插图
 
 基础配置后通过以下规则应用模板，后续内容就是正文：
@@ -121,6 +146,7 @@ typst compile --font-path fonts main.typ output.pdf
   cover: cover_config,
   outline: outline_config,
   references: references_config,
+  appendices: appendices_config,
 )
 
 = 1. 实验结果
@@ -164,7 +190,7 @@ func main() {
 | `bibliography_config.font` | 当前方案的西文 + 宋体 | 文献正文字体。 |
 | `bibliography_config.title-font` | 当前方案的西文 + 黑体 | 文献标题字体。 |
 
-`report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), body)` 是模板入口，接收三组基础配置和正文。通过 `#show: report.with(...)` 使用，`body` 由 Typst 自动传入。后续全局排版规则和模块组装可在此函数中扩展。
+`report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), appendices: (), body)` 是模板入口，接收封面、目录、文献配置、附录数组和正文。通过 `#show: report.with(...)` 使用，`body` 由 Typst 自动传入。后续全局排版规则和模块组装可在此函数中扩展。
 
 底层模块也可以单独导入使用；使用 `report` 时不需要重复应用它们：
 
@@ -173,6 +199,7 @@ func main() {
 | `page-setup(paper: "a4", margin: (top: 9.5em), header-font: "FandolKai", footer-font: "FandolSong", body)` | `#show: page-setup`，设置页面、页眉页脚。第一页不显示页眉页脚，第二个物理页起显示页码 `1`，目录计入页码。 |
 | `figure_setup(font: "FandolHei", body)` | `#show: figure_setup`，设置图片编号与题注字体。 |
 | `code_setup(body)` | `#show: code_setup`，初始化 `codly` 与语言配置。 |
+| `appendix-pages(entries: (), font: ("TeX Gyre Termes", "FandolHei"), size: 18pt)` | `#appendix-pages(entries: appendices_config)`，按顺序生成独立附录页；空数组不输出内容。 |
 | `cover-page(...)` | `#cover-page(..cover_config)`，生成封面并分页，参数对应封面字段，另接受 `font`、`title-font`，默认均为 `"FandolSong"`。 |
 | `outline_with_sizes(depth: 3, font_sizes: (), font: "FandolSong", title-font: "FandolHei")` | `#outline_with_sizes(..outline_config)`，生成目录并分页；不可直接无参调用，字号数组长度必须等于深度。 |
 | `references-page(...)` | `#references-page(..references_config)`，分页并输出文献；除基础参数外，支持 `style`、`font` 和 `title-font`，默认值同上表。 |

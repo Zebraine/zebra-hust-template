@@ -4,6 +4,7 @@
 #import "modules/cover.typ": cover-page
 #import "modules/outline.typ": outline_with_sizes
 #import "modules/references.typ": references-page
+#import "modules/appendix.typ": appendix-pages
 
 #let font_config = (
   latin: "TeX Gyre Termes",
@@ -26,7 +27,12 @@
   title-font: (font_config.latin, font_config.hei),
 )
 
-#let report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), body) = {
+#let appendix_style = (
+  font: (font_config.latin, font_config.hei),
+  size: 18pt,
+)
+
+#let report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), appendices: (), body) = {
   show: page-setup.with(..page_config)
   show: figure_setup.with(font: (font_config.latin, font_config.hei))
   show: code_setup
@@ -42,4 +48,5 @@
   )
   body
   references-page(..bibliography_config, ..references)
+  appendix-pages(entries: appendices, ..appendix_style)
 }

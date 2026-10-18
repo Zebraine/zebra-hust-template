@@ -23,10 +23,19 @@
   full: true,
 )
 
+#let appendices_config = (
+  (
+    body: [
+      这里填写补充材料、实验数据或完整代码。
+    ],
+  ),
+)
+
 #show: report.with(
   cover: cover_config,
   outline: outline_config,
   references: references_config,
+  appendices: appendices_config,
 )
 
 #align(center)[
