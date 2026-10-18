@@ -68,7 +68,7 @@ def main():
     ))
     if existing:
         raise RuntimeError(f"An open PR already exists: {existing[0]['url']}")
-    run("gh", "repo", "fork", "typst/packages", "--clone=false", "--remote=false")
+    run("gh", "repo", "fork", "typst/packages", "--clone=false")
     fork = json.loads(run("gh", "api", f"repos/{owner}/packages"))
     if fork.get("parent", {}).get("full_name") != "typst/packages":
         raise RuntimeError("The target repository is not a fork of typst/packages")
