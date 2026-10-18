@@ -1,7 +1,7 @@
 # Go Gopher
 
 The Go gopher artwork in go.png is by Renee French.
-It is not covered by the template's MIT or MIT-0 licenses.
+It is not covered by the template's MIT license.
 
 See [The Go Gopher](https://go.dev/blog/gopher) and
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

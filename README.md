@@ -70,9 +70,9 @@ typst compile --root . --font-path fonts examples/cs-thesis.typ examples/cs-thes
 
 ### 许可
 
-模板库采用 MIT；`main.typ`、`references.bib` 与 `examples/` 下的 Typst 示例采用 MIT-0，见 [LICENSE-examples](LICENSE-examples)。
+项目代码与示例统一采用 [MIT 许可证](LICENSE)。第三方字体遵循各自附带的许可证，见 [fonts/README.md](fonts/README.md)。
 
-第三方素材不包含在这两项授权中：`images/go.png` 的 Go gopher 作者为 Renee French，使用遵循 [CC BY 4.0](https://go.dev/blog/gopher)；`images/HUSTGreen.svg` 的标识权利属于相应权利人，使用时遵守学校的[视觉标识规范](https://www.hust.edu.cn/xmxhxg.htm)，本项目不授予额外的标识使用权。
+第三方素材不包含在项目的 MIT 授权中：`images/go.png` 的 Go gopher 作者为 Renee French，使用遵循 [CC BY 4.0](https://go.dev/blog/gopher)；`images/HUSTGreen.svg` 的标识权利属于相应权利人，使用时遵守学校的[视觉标识规范](https://www.hust.edu.cn/xmxhxg.htm)，本项目不授予额外的标识使用权。
 
 ### 其他问题
 
