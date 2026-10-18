@@ -3,7 +3,7 @@ FONT_PATH ?= fonts
 INPUT ?= main.typ
 OUTPUT ?= output.pdf
 
-.PHONY: build watch examples package
+.PHONY: build watch examples package submit-pr check-release
 
 default: build
 
@@ -19,3 +19,9 @@ examples:
 
 package:
 	python3 scripts/prepare-release.py
+
+check-release:
+	python3 scripts/submit-pr.py --dry-run
+
+submit-pr:
+	python3 scripts/submit-pr.py

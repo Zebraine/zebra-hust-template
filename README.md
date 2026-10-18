@@ -72,6 +72,14 @@ typst watch main.typ
 
 仓库中的 `fonts/` 保留了其他开源字体，不是当前默认字体。需要进一步修改样式时，可在仓库源码的 `config.typ` 中调整 `font_config` 等配置；初始化的项目只包含正文示例，样式由包提供。
 
+### 提交到 Universe
+
+需要 Python 3.11+、Typst、jj 和已通过 `gh auth login` 登录的 GitHub CLI。
+
+`make check-release` 只做本地打包和编译检查；确认源代码已用 jj 提交后，执行 `make submit-pr` 自动 Fork 官方仓库、推送并创建 PR。SSH 需有推送权限，可通过 `GIT_SSH_COMMAND` 指定连接方式。
+
+脚本读取 `typst.toml` 的包名和版本，同步发布副本中的引用版本并重新生成缩略图，不改动源文件。运行目录保留在 `build/submit-*/`；若已有同版本 PR 或远端分支，会停止而不是覆盖。后续审核修改可在其中的 `registry/` 用 jj 继续提交。首次克隆官方仓库可能较大。
+
 ### 其他问题
 
 有问题请提 issue，当然 PR 更好，毕竟我懒。
