@@ -1,4 +1,4 @@
-#import "/config.typ": report
+#import "/config.typ": report, references, appendix
 #import "/modules/figure_setup.typ": img
 
 #show: report.with(
@@ -13,7 +13,6 @@
     report-date: [2026年10月18日],
     college: [计算机科学与技术学院],
   ),
-  appendices: ((title: [实验记录], body: [程序正常运行，输出结果与预期一致。]),),
 )
 
 = 1. 实验目的
@@ -43,3 +42,29 @@ func main() {
 == 2.1 实验结果
 
 程序输出 `Hello, World!`，实验完成。
+
+#figure(
+  table(
+    columns: 3,
+    inset: 8pt,
+    stroke: none,
+    table.hline(stroke: 0.8pt),
+    table.header([*测试项*], [*预期输出*], [*结果*]),
+    table.hline(stroke: 0.5pt),
+    [编译], [无错误], [通过],
+    [运行], [`Hello, World!`], [通过],
+    table.hline(stroke: 0.8pt),
+  ),
+  supplement: [表],
+  caption: [程序测试结果],
+) <test-results>
+
+测试结果见 @test-results。
+
+#references()
+
+#appendix(title: [实验记录])[
+  + 将代码保存为 `hello.go`。
+  + 执行 `go run hello.go`。
+  + 终端输出 `Hello, World!`，与预期一致。
+]

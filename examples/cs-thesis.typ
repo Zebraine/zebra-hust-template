@@ -1,4 +1,4 @@
-#import "/config.typ": report
+#import "/config.typ": report, references, appendix
 #import "/modules/figure_setup.typ": img
 
 #show: report.with(
@@ -17,8 +17,6 @@
     abstract-en: [This example demonstrates thesis typesetting with automatic headings, figures, tables, and references.],
     keywords-en: ("typesetting", "Typst"),
   ),
-  acknowledgments: [感谢指导教师和同学在研究过程中给予的帮助。],
-  appendices: ((title: [补充材料], body: [此处放置实验记录或完整代码。]),),
 )
 
 = 绪论
@@ -49,3 +47,18 @@
 === 讨论
 
 这里填写讨论内容。
+
+#pagebreak()
+#heading(level: 1, numbering: none)[致谢]
+
+感谢指导教师和同学在研究过程中给予的帮助。
+
+#references()
+
+#appendix(title: [补充材料])[
+  == 编译与检查
+
+  + 使用 `typst compile --root . --font-path fonts examples/cs-thesis.typ examples/cs-thesis.pdf` 编译。
+  + 检查中英文摘要、目录和正文页码。
+  + 检查第二章的图号是否从 `2-1` 开始，以及跨章表格引用是否正确。
+]

@@ -4,7 +4,7 @@
 #import "modules/cover.typ": cover-page
 #import "modules/outline.typ": outline_with_sizes
 #import "modules/references.typ": references-page
-#import "modules/appendix.typ": appendix-pages
+#import "modules/appendix.typ": appendix-page
 #import "presets/course-report.typ": course-report
 #import "presets/cs-thesis.typ": cs-thesis
 #import "modules/thesis.typ": thesis-report
@@ -40,6 +40,21 @@
   size: 18pt,
 )
 
+#let content_style = state("report-content-style", (
+  bibliography: bibliography_config,
+  appendix: appendix_style,
+))
+
+#let references(source: "/references.bib", title: [参考文献], full: false, style: auto) = context {
+  let settings = content_style.get().bibliography
+  if style != auto { settings += (style: style) }
+  references-page(..(settings + (source: source, title: title, full: full)))
+}
+
+#let appendix(title: none, body) = context {
+  appendix-page(title: title, ..content_style.get().appendix, body)
+}
+
 #let thesis_config = (
   margin: (left: 1.25in, right: 1.25in, top: 1.28in, bottom: 1.06in),
   leading: 0.8em,
@@ -56,23 +71,28 @@
 )
 
 #let report(
-  preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto,
+  preset: "course-report", cover: (:), outline: (:),
   front-matter: (:), statement: auto, acknowledgments: auto, body,
 ) = {
   assert(preset in presets, message: "未知配置集：" + preset)
   let defaults = presets.at(preset)
   let cover = defaults.cover + cover
   let outline = defaults.outline + outline
-  let references = defaults.references + references
-  let appendices = if appendices == auto { defaults.appendices } else { appendices }
+  let is-thesis = defaults.at("layout", default: "course-report") == "cs-thesis"
+  let bibliography = bibliography_config + defaults.at("bibliography", default: (:))
+  if is-thesis { bibliography += (outlined: true, title-size: 18pt) }
+  let body = [
+    #content_style.update((bibliography: bibliography, appendix: appendix_style))
+    #body
+  ]
 
-  if defaults.at("layout", default: "course-report") == "cs-thesis" {
+  if is-thesis {
     return thesis-report(
-      cover, outline, references, appendices,
+      cover, outline,
       defaults.front-matter + front-matter,
       if statement == auto { defaults.statement } else { statement },
       if acknowledgments == auto { defaults.acknowledgments } else { acknowledgments },
-      font_config, thesis_config, bibliography_config, appendix_style, body,
+      font_config, thesis_config, body,
     )
   }
 
@@ -90,6 +110,4 @@
     ..outline,
   )
   body
-  references-page(..bibliography_config, ..references)
-  appendix-pages(entries: appendices, ..appendix_style)
 }

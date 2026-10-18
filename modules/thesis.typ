@@ -1,7 +1,5 @@
 #import "code_setup.typ": code_setup
 #import "outline.typ": outline_with_sizes
-#import "references.typ": references-page
-#import "appendix.typ": appendix-pages
 #import "cover.typ": thesis-cover
 
 #let thesis-title(title, fonts, outlined: true) = {
@@ -29,7 +27,7 @@
   counter(heading).update(0)
   set heading(numbering: "1.1")
   show heading: it => {
-    if it.level == 1 {
+    if it.level == 1 and it.numbering != none {
       pagebreak(weak: true)
       counter(figure.where(kind: image)).update(0)
       counter(figure.where(kind: table)).update(0)
@@ -64,8 +62,8 @@
 }
 
 #let thesis-report(
-  cover, outline, references, appendices, front-matter, statement, acknowledgments,
-  fonts, layout, bibliography-style, appendix-style, body,
+  cover, outline, front-matter, statement, acknowledgments,
+  fonts, layout, body,
 ) = {
   show: code_setup
   set text(font: (fonts.latin, fonts.song), size: 12pt, lang: "zh")
@@ -121,6 +119,4 @@
     thesis-title([致谢], fonts)
     acknowledgments
   }
-  references-page(..(bibliography-style + references + (outlined: true, title-size: 18pt)))
-  appendix-pages(entries: appendices, ..appendix-style)
 }

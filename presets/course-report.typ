@@ -13,16 +13,4 @@
     depth: 3,
     font_sizes: (12pt, 12pt, 12pt),
   ),
-  references: (
-    source: "/references.bib",
-    title: [参考文献],
-    full: true,
-  ),
-  appendices: (
-    (
-      body: [
-        这里填写补充材料、实验数据或完整代码。
-      ],
-    ),
-  ),
 )

@@ -5,6 +5,8 @@ OUTPUT ?= output.pdf
 
 .PHONY: build watch examples
 
+default: build
+
 build:
 	$(TYPST) compile --font-path "$(FONT_PATH)" "$(INPUT)" "$(OUTPUT)"
 

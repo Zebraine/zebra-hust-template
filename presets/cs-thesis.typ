@@ -10,10 +10,7 @@
     college: [计算机科学与技术学院],
   ),
   outline: (depth: 2, font_sizes: (12pt, 12pt)),
-  references: (
-    source: "/references.bib",
-    title: [参考文献],
-    full: true,
+  bibliography: (
     style: "gb-7714-2005-numeric",
   ),
   front-matter: (
@@ -24,5 +21,4 @@
   ),
   statement: none,
   acknowledgments: none,
-  appendices: (),
 )
