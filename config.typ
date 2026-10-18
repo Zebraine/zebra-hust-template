@@ -18,7 +18,7 @@
   latin: ("Times New Roman", "Libertinus Serif", "TeX Gyre Termes"),
   song: ("SimSun", "Noto Serif CJK SC", "FandolSong"),
   hei: ("SimHei", "Noto Sans CJK SC", "FandolHei"),
-  kai: ("KaiTi", "Noto Serif CJK SC", "FandolKai"),
+  kai: ("KaiTi", "FandolKai", "Noto Serif CJK SC"),
   cover: ("STZhongsong", "Noto Serif CJK SC", "FandolSong"),
 )
 
