@@ -27,7 +27,7 @@
 
 正文标题不手写编号，由模板自动生成。
 
-#img("/images/go.png", width: 25%, caption: [示例图片])
+#img(path("../images/go.png"), width: 25%, caption: [示例图片])
 
 #figure(
   table(columns: 2, [项目], [结果], [示例], [通过]),
@@ -38,7 +38,7 @@
 
 新章从新的一页开始，图表序号在章内重新计数。
 
-#img("/images/go.png", width: 25%, caption: [第二章示例图片])
+#img(path("../images/go.png"), width: 25%, caption: [第二章示例图片])
 
 == 实验结果
 
@@ -53,7 +53,7 @@
 
 感谢指导教师和同学在研究过程中给予的帮助。
 
-#references()
+#references(source: path("../references.bib"))
 
 #appendix(title: [补充材料])[
   == 编译与检查

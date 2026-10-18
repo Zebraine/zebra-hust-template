@@ -23,7 +23,7 @@
 
 使用 Go 编程语言完成本次实验。
 
-#img("/images/go.png", width: 20%, caption: [Go 语言示例图片])
+#img(path("../images/go.png"), width: 20%, caption: [Go 语言示例图片])
 
 = 2. 实验过程
 
@@ -61,7 +61,7 @@ func main() {
 
 测试结果见 @test-results。
 
-#references()
+#references(source: path("../references.bib"))
 
 #appendix(title: [实验记录])[
   + 将代码保存为 `hello.go`。

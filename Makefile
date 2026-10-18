@@ -3,7 +3,7 @@ FONT_PATH ?= fonts
 INPUT ?= main.typ
 OUTPUT ?= output.pdf
 
-.PHONY: build watch examples
+.PHONY: build watch examples package
 
 default: build
 
@@ -16,3 +16,6 @@ watch:
 examples:
 	$(TYPST) compile --root . --font-path "$(FONT_PATH)" examples/course-report.typ examples/course-report.pdf
 	$(TYPST) compile --root . --font-path "$(FONT_PATH)" examples/cs-thesis.typ examples/cs-thesis.pdf
+
+package:
+	python3 scripts/prepare-release.py

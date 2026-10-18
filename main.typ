@@ -36,7 +36,7 @@
   = 1. 图片示例
 ]
 
-#img("../images/go.png", width: 20%, caption: "这是 Golang, 一个编程语言。")
+#img(path("images/go.png"), width: 20%, caption: "这是 Golang, 一个编程语言。")
 
 == 1.1 子标题
 123
@@ -82,7 +82,7 @@ func main() {
 期刊论文可通过文献键引用，例如 @zhang2020；专著示例见 @zhao2019。
 同一来源再次引用时沿用已有编号。多作者文献见 @sun2021，网络资源见 @li2022。
 
-#references()
+#references(source: path("references.bib"))
 
 #appendix(title: [实验记录])[
   本附录展示补充说明的写法，标题自动编号为“附录 A”。

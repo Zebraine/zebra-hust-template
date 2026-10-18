@@ -15,11 +15,11 @@
 )
 
 #let font_config = (
-  latin: "TeX Gyre Termes",
-  song: "FandolSong",
-  hei: "FandolHei",
-  kai: "FandolKai",
-  cover: "FandolSong",
+  latin: "Libertinus Serif",
+  song: "Noto Serif CJK SC",
+  hei: "Noto Sans CJK SC",
+  kai: "Noto Serif CJK SC",
+  cover: "Noto Serif CJK SC",
 )
 
 #let page_config = (
@@ -45,7 +45,8 @@
   appendix: appendix_style,
 ))
 
-#let references(source: "/references.bib", title: [参考文献], full: false, style: auto) = context {
+#let references(source: none, title: [参考文献], full: false, style: auto) = context {
+  assert(source != none, message: "请在主文件中使用 references(source: path(\"references.bib\"))")
   let settings = content_style.get().bibliography
   if style != auto { settings += (style: style) }
   references-page(..(settings + (source: source, title: title, full: full)))
