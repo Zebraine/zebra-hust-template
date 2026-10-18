@@ -1,4 +1,4 @@
-#import "@preview/pointless-size:0.1.2": zh
+#import "@preview/pointless-size:0.1.3": zh
 
 #let references-page(
   source: "/references.bib",

@@ -1,4 +1,4 @@
-#import "@preview/pointless-size:0.1.2": zh
+#import "@preview/pointless-size:0.1.3": zh
 
 // 目录
 #let outline_with_sizes(depth: 3, font_sizes: (), font: "FandolSong", title-font: "FandolHei", title-size: zh(2)) = {

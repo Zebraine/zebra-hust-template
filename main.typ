@@ -82,6 +82,10 @@ func main() {
 期刊论文可通过文献键引用，例如 @zhang2020；专著示例见 @zhao2019。
 同一来源再次引用时沿用已有编号。多作者文献见 @sun2021，网络资源见 @li2022。
 
+示例插图 Go gopher 由 Renee French 绘制，采用
+#link("https://creativecommons.org/licenses/by/4.0/")[CC BY 4.0] 许可；
+#link("https://go.dev/blog/gopher")[来源说明]。
+
 #references(source: path("references.bib"))
 
 #appendix(title: [实验记录])[

@@ -53,6 +53,10 @@
 
 感谢指导教师和同学在研究过程中给予的帮助。
 
+示例插图 Go gopher 由 Renee French 绘制，采用
+#link("https://creativecommons.org/licenses/by/4.0/")[CC BY 4.0] 许可；
+#link("https://go.dev/blog/gopher")[来源说明]。
+
 #references(source: path("../references.bib"))
 
 #appendix(title: [补充材料])[

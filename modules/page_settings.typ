@@ -1,4 +1,4 @@
-#import "@preview/pointless-size:0.1.2": zh
+#import "@preview/pointless-size:0.1.3": zh
 #import "header.typ": header_colorful
 
 #let page-setup(paper: "a4", margin: (top: 9.5em), header-font: "FandolKai", footer-font: "FandolSong", body) = {

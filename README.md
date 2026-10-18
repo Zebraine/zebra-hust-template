@@ -72,13 +72,19 @@ typst watch main.typ
 
 仓库中的 `fonts/` 保留了其他开源字体，不是当前默认字体。需要进一步修改样式时，可在仓库源码的 `config.typ` 中调整 `font_config` 等配置；初始化的项目只包含正文示例，样式由包提供。
 
+### 许可
+
+模板库采用 MIT；`template/` 下的 Typst 正文与文献示例采用 MIT-0，正常修改后生成的文档无需保留软件署名。第三方素材不包含在这两项授权中：`template/images/go.png` 的 Go gopher 作者为 Renee French，使用遵循 [CC BY 4.0](https://go.dev/blog/gopher)；`images/HUSTGreen.svg` 的标识权利属于相应权利人，使用时遵守学校的[视觉标识规范](https://www.hust.edu.cn/xmxhxg.htm)，本项目不授予额外的标识使用权。
+
 ### 提交到 Universe
 
 需要 Python 3.11+、Typst、jj 和已通过 `gh auth login` 登录的 GitHub CLI。
 
-`make check-release` 只做本地打包和编译检查；确认源代码已用 jj 提交后，执行 `make submit-pr` 自动 Fork 官方仓库、推送并创建 PR。SSH 需有推送权限，可通过 `GIT_SSH_COMMAND` 指定连接方式。
+`make check-release` 打包、编译，并联网核对依赖版本和获取官方 PR 清单，不修改远端。确认源代码已用 jj 提交后，执行 `make submit-pr`，按提示审核清单、许可及文件差异，再分别确认推送和创建 PR。未经确认不会自动提交。
 
-脚本读取 `typst.toml` 的包名和版本，同步发布副本中的引用版本并重新生成缩略图，不改动源文件。运行目录保留在 `build/submit-*/`；若已有同版本 PR 或远端分支，会停止而不是覆盖。后续审核修改可在其中的 `registry/` 用 jj 继续提交。首次克隆官方仓库可能较大。
+脚本读取 `typst.toml`，生成发布副本及 `pr-body.md`，不改动源文件。提交必须先由本地 jj 创建提交并推送 Fork，再验证远端提交与差异。网络失败即停止，不改用 API 创建提交。
+
+运行目录保留在 `build/submit-*/`；已有版本或分支不会被覆盖。关闭过旧 PR 后重提，可通过 `python3 scripts/submit-pr.py --branch 新分支名` 指定新分支。SSH 连接可用 `--upstream-url git@github.com:typst/packages.git` 和 `GIT_SSH_COMMAND` 配置；首次克隆官方仓库可能较大。
 
 ### 其他问题
 

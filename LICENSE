@@ -1,3 +1,8 @@
+Scope: MIT applies to the template library and development scripts.
+The .typ and .bib files in template/ are licensed under MIT-0, as stated
+in template/LICENSE. Third-party images and fonts are not covered by these
+software licenses; see README.md and the notices distributed with those assets.
+
 MIT License
 
 Copyright (c) 2026 Zebraine

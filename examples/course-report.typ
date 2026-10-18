@@ -61,6 +61,10 @@ func main() {
 
 测试结果见 @test-results。
 
+示例插图 Go gopher 由 Renee French 绘制，采用
+#link("https://creativecommons.org/licenses/by/4.0/")[CC BY 4.0] 许可；
+#link("https://go.dev/blog/gopher")[来源说明]。
+
 #references(source: path("../references.bib"))
 
 #appendix(title: [实验记录])[

@@ -1,5 +1,5 @@
-#import "@preview/zh-format:0.1.0": *
-#import "@preview/pointless-size:0.1.2": zh
+#import "@preview/zh-format:0.1.1": *
+#import "@preview/pointless-size:0.1.3": zh
 
 #let cover-label(width, label, font: "FandolSong", weight: "regular") = box(width: width, {
   set text(font: font, weight: weight)
