@@ -15,11 +15,11 @@
 )
 
 #let font_config = (
-  latin: ("Times New Roman", "Libertinus Serif"),
-  song: ("SimSun", "Noto Serif CJK SC"),
-  hei: ("SimHei", "Noto Sans CJK SC"),
-  kai: ("KaiTi", "Noto Serif CJK SC"),
-  cover: ("STZhongsong", "Noto Serif CJK SC"),
+  latin: ("Times New Roman", "Libertinus Serif", "TeX Gyre Termes"),
+  song: ("SimSun", "Noto Serif CJK SC", "FandolSong"),
+  hei: ("SimHei", "Noto Sans CJK SC", "FandolHei"),
+  kai: ("KaiTi", "Noto Serif CJK SC", "FandolKai"),
+  cover: ("STZhongsong", "Noto Serif CJK SC", "FandolSong"),
 )
 
 #let page_config = (

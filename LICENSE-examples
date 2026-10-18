@@ -1,5 +1,5 @@
-Scope: This MIT-0 license applies to the .typ and .bib files in this directory.
-Images are excluded; see images/ATTRIBUTION.md.
+Scope: This MIT-0 license applies to main.typ, references.bib, and the .typ
+files in examples/. Images are excluded; see images/ATTRIBUTION.md.
 
 MIT No Attribution
 
