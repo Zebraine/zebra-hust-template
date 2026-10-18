@@ -9,7 +9,7 @@
 #let thesis-cover(cover, fonts, layout) = {
   set page(margin: 0pt, header: none, footer: none, numbering: none)
   set par(first-line-indent: 0pt, justify: false)
-  set text(font: (fonts.latin, fonts.cover), size: 16pt, top-edge: "bounds", bottom-edge: "bounds")
+  set text(font: (..fonts.latin, ..fonts.cover), size: 16pt, top-edge: "bounds", bottom-edge: "bounds")
 
   context {
     let field(label, value) = {
@@ -35,7 +35,7 @@
       (top: layout.logo-top, body: image("../images/HUSTGreen.svg", height: 1.61cm)),
       (top: layout.heading-top, body: text(font: fonts.cover, size: 36pt, weight: "bold")[本科生毕业设计]),
       (top: layout.title-top, body: block(width: 146mm, align(center,
-        text(font: (fonts.latin, fonts.hei), size: 22pt, weight: "bold", cover.title),
+        text(font: (..fonts.latin, ..fonts.hei), size: 22pt, weight: "bold", cover.title),
       ))),
       (top: layout.fields-top, body: fields),
       (top: layout.date-top, body: cover.report-date),

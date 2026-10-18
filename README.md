@@ -64,7 +64,11 @@ typst watch main.typ
 
 ### 字体问题
 
-默认使用 `Libertinus Serif`、`Noto Serif CJK SC` 和 `Noto Sans CJK SC`。发布包不附带字体，本地编译请先安装，或通过 `typst compile --font-path 字体目录 main.typ` 指定字体目录；网页端缺少字体时需自行上传。
+默认优先使用 Times New Roman、宋体（SimSun）、黑体（SimHei）、楷体（KaiTi）和华文中宋（STZhongsong），分别用于英文、正文、标题、页眉及封面与页码。不使用额外描粗。
+
+缺少目标字体时，英文回退到 `Libertinus Serif`，中文回退到 `Noto Serif CJK SC` 或 `Noto Sans CJK SC`；替代字体的版式可能略有不同。
+
+发布包不附带字体。请自行合法安装所需字体并遵守其使用与 PDF 嵌入许可，也可通过 `typst compile --font-path 字体目录 main.typ` 指定字体目录；网页端缺少字体时需自行上传有相应授权的字体。
 
 仓库中的 `fonts/` 保留了其他开源字体，不是当前默认字体。需要进一步修改样式时，可在仓库源码的 `config.typ` 中调整 `font_config` 等配置；初始化的项目只包含正文示例，样式由包提供。
 

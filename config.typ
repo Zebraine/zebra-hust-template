@@ -15,11 +15,11 @@
 )
 
 #let font_config = (
-  latin: "Libertinus Serif",
-  song: "Noto Serif CJK SC",
-  hei: "Noto Sans CJK SC",
-  kai: "Noto Serif CJK SC",
-  cover: "Noto Serif CJK SC",
+  latin: ("Times New Roman", "Libertinus Serif"),
+  song: ("SimSun", "Noto Serif CJK SC"),
+  hei: ("SimHei", "Noto Sans CJK SC"),
+  kai: ("KaiTi", "Noto Serif CJK SC"),
+  cover: ("STZhongsong", "Noto Serif CJK SC"),
 )
 
 #let page_config = (
@@ -31,12 +31,12 @@
 
 #let bibliography_config = (
   style: "gb-7714-2015-numeric",
-  font: (font_config.latin, font_config.song),
-  title-font: (font_config.latin, font_config.hei),
+  font: (..font_config.latin, ..font_config.song),
+  title-font: (..font_config.latin, ..font_config.hei),
 )
 
 #let appendix_style = (
-  font: (font_config.latin, font_config.hei),
+  font: (..font_config.latin, ..font_config.hei),
   size: 18pt,
 )
 
@@ -98,16 +98,16 @@
   }
 
   show: page-setup.with(..page_config)
-  show: figure_setup.with(font: (font_config.latin, font_config.hei))
+  show: figure_setup.with(font: (..font_config.latin, ..font_config.hei))
   show: code_setup
 
-  set text(font: (font_config.latin, font_config.song), size: 12pt, lang: "zh")
-  show heading: set text(font: (font_config.latin, font_config.hei))
+  set text(font: (..font_config.latin, ..font_config.song), size: 12pt, lang: "zh")
+  show heading: set text(font: (..font_config.latin, ..font_config.hei))
 
   cover-page(title-font: font_config.cover, font: font_config.cover, ..cover)
   outline_with_sizes(
-    font: (font_config.latin, font_config.song),
-    title-font: (font_config.latin, font_config.hei),
+    font: (..font_config.latin, ..font_config.song),
+    title-font: (..font_config.latin, ..font_config.hei),
     ..outline,
   )
   body

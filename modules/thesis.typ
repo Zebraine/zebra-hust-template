@@ -5,7 +5,7 @@
 #let thesis-title(title, fonts, outlined: true) = {
   set par(first-line-indent: 0pt)
   show heading: set align(center)
-  show heading: set text(font: (fonts.latin, fonts.hei), size: 18pt, weight: "bold")
+  show heading: set text(font: (..fonts.latin, ..fonts.hei), size: 18pt, weight: "bold")
   heading(level: 1, numbering: none, outlined: outlined, title)
 }
 
@@ -34,7 +34,7 @@
     }
     set align(if it.level == 1 { center } else { left })
     set text(
-      font: (fonts.latin, fonts.hei),
+      font: (..fonts.latin, ..fonts.hei),
       size: heading-sizes.at(calc.min(it.level, heading-sizes.len()) - 1),
       weight: "bold",
     )
@@ -44,7 +44,7 @@
   show figure.where(kind: image): set figure(supplement: [图])
   show figure.where(kind: table): set figure(supplement: [表])
   show figure.where(kind: table): set figure.caption(position: top)
-  show figure.caption: set text(font: (fonts.latin, fonts.hei))
+  show figure.caption: set text(font: (..fonts.latin, ..fonts.hei))
   show ref: reference => context {
     let target = reference.element
     if target != none and target.func() == figure and reference.form == "normal" {
@@ -66,7 +66,7 @@
   fonts, layout, body,
 ) = {
   show: code_setup
-  set text(font: (fonts.latin, fonts.song), size: 12pt, lang: "zh")
+  set text(font: (..fonts.latin, ..fonts.song), size: 12pt, lang: "zh")
   set par(first-line-indent: (amount: 2em, all: true), leading: layout.leading, justify: true)
   set page(paper: "a4", margin: layout.margin)
 
@@ -104,8 +104,8 @@
     thesis-abstract(front-matter.abstract-en, front-matter.keywords-en, fonts, english: true)
   }
   outline_with_sizes(
-    font: (fonts.latin, fonts.song),
-    title-font: (fonts.latin, fonts.hei),
+    font: (..fonts.latin, ..fonts.song),
+    title-font: (..fonts.latin, ..fonts.hei),
     title-size: 18pt,
     ..outline,
   )
