@@ -1,4 +1,4 @@
-#let figure_setup(body) = {
+#let figure_setup(font: "FandolHei", body) = {
   // 创建章节计数器
   let chapter = counter("chapter")
 
@@ -19,7 +19,7 @@
     set align(center)
     it.body
     v(0.5em)
-    text(weight: "bold")[
+    text(font: font, weight: "bold")[
       图 #it.counter.display(it.numbering) #h(0.5em) #it.caption.body
     ]
     v(1em)

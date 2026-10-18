@@ -10,6 +10,8 @@
   teacher: "李四",
   report-date: "2024年1月1日",
   college: "计算机科学与技术学院",
+  title-font: "FandolSong",
+  font: "FandolSong",
 ) = {
   v(1em)
 
@@ -17,18 +19,18 @@
 
   v(-1em)
 
-  align(center, text(font: "HYFangSongJ", size: zh(0.5), weight: "bold", tracking: 0.5em, stroke: 0.03em)[#title])
+  align(center, text(font: title-font, size: zh(0.5), weight: "bold", tracking: 0.5em)[#title])
 
   v(3em)
 
   set text(size: zh(3))
 
   let format-key(width, s) = box(width: width, {
-    set text(font: "SimHei", weight: "bold", stroke: 0.03em)
+    set text(font: font, weight: "bold")
     let chars = s.clusters()
     stack(dir: ltr, spacing: 1fr, ..chars)
   })
-  let format-value(width, s) = text(font: "SimHei", weight: "bold", stroke: 0.01em)[#u(width: width)[#s]]
+  let format-value(width, s) = text(font: font, weight: "bold")[#u(width: width)[#s]]
 
   let key = format-key.with(5em)
   let value = format-value.with(10em)
@@ -54,7 +56,7 @@
 
   v(3em)
 
-  align(center, text(college, font: "SimHei", size: zh(3), weight: "bold", stroke: 0.03em))
+  align(center, text(college, font: font, size: zh(3), weight: "bold"))
 
   pagebreak()
 }
