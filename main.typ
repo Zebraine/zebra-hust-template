@@ -1,6 +1,7 @@
 #import "config.typ": report
 #import "modules/figure_setup.typ": img
 
+/*
 #let cover_config = (
   title: [文档标题],
   course: [课程名称],
@@ -30,12 +31,16 @@
     ],
   ),
 )
+*/
 
 #show: report.with(
+  preset: "course-report",
+  /*
   cover: cover_config,
   outline: outline_config,
   references: references_config,
   appendices: appendices_config,
+  */
 )
 
 #align(center)[

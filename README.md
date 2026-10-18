@@ -2,7 +2,7 @@
 
 华中科技大学课程实验报告的 Typst 模板，是对 TeX 报告模板的简单重写，提供封面、目录、页眉页脚、图片题注、代码块和参考文献排版。
 
-基础配置和正文集中在 `main.typ`，模板的高级设置放在 `config.typ`，文献数据使用独立的 `.bib` 文件。
+默认使用 `course-report` 配置集。`main.typ` 顶部保留已注释的基础配置覆盖示例，下方编写正文；模板的高级设置放在 `config.typ`，文献数据使用独立的 `.bib` 文件。
 
 ## 项目结构
 
@@ -10,6 +10,7 @@
 .
 ├── main.typ                  # 唯一编译入口：顶部基础配置，下方正文
 ├── config.typ                # 模板高级配置与 report 组装函数
+├── presets/course-report.typ # 默认课程报告配置集
 ├── references.bib            # BibLaTeX 文献数据库
 ├── fonts/                    # 内置开源字体、许可及使用说明
 ├── Makefile                  # 自动传入字体目录的编译入口
@@ -28,7 +29,7 @@
 
 ## 快速开始
 
-1. 修改 `main.typ` 顶部的封面、目录和参考文献配置。
+1. 默认直接使用 `course-report` 配置集；需要自定义时，取消 `main.typ` 顶部配置和 `report.with` 中对应参数的注释，再修改字段。
 2. 在同一文件的 `#show: report.with(...)` 下方编写正文。
 3. 在 `references.bib` 中维护文献，正文中用 `@文献键` 引用。
 4. 在项目根目录编译：
@@ -41,9 +42,32 @@ typst compile --font-path fonts main.typ output.pdf
 
 ## main.typ：基础配置与正文
 
+### 配置集
+
+当前默认配置集 `course-report` 保留原有封面占位信息、三级目录、完整文献列表及示例附录，定义在 `presets/course-report.typ`。
+
+```typst
+#show: report.with(preset: "course-report")
+```
+
+省略 `preset` 时也使用 `course-report`。`main.typ` 中原有四组配置及对应传参默认以 `/* ... */` 注释，不影响编译。自定义时取消两处注释，或直接在现有 `report.with` 中只写需要覆盖的字段：
+
+```typst
+#show: report.with(
+  preset: "course-report",
+  cover: (name: [张三], course: [数据结构实验]),
+  references: (full: false,),
+  appendices: (),
+)
+```
+
+封面、目录、文献配置按字段覆盖配置集，未提供的字段保留默认值；附录数组整体替换，`auto` 表示沿用配置集，`()` 表示关闭附录。目录深度与字号数组仍需匹配。示例中的 `#show` 用于替换原有调用，不要重复应用模板。
+
+新增配置集时，在 `presets/` 新建 `.typ` 文件并导出包含 `cover`、`outline`、`references`、`appendices` 的字典，然后在 `config.typ` 导入并注册到 `presets` 字典。通过 `preset: "配置集名称"` 选择；未知名称会报错。
+
 ### 封面
 
-修改文件顶部的 `cover_config`，所有字段都会传给 `cover-page`：
+取消注释后修改文件顶部的 `cover_config`，通过 `cover: cover_config` 覆盖配置集：
 
 ```typst
 #let cover_config = (
@@ -58,7 +82,7 @@ typst compile --font-path fonts main.typ output.pdf
 )
 ```
 
-封面使用 `images/HUSTGreen.svg`。所有字段均可省略，但省略时会使用模块中的示例值，请在提交报告前完整填写。
+封面使用 `images/HUSTGreen.svg`。覆盖配置中省略的字段沿用配置集的值，请在提交报告前完整填写个人信息。
 
 ### 目录
 
@@ -190,7 +214,7 @@ func main() {
 | `bibliography_config.font` | 当前方案的西文 + 宋体 | 文献正文字体。 |
 | `bibliography_config.title-font` | 当前方案的西文 + 黑体 | 文献标题字体。 |
 
-`report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), appendices: (), body)` 是模板入口，接收封面、目录、文献配置、附录数组和正文。通过 `#show: report.with(...)` 使用，`body` 由 Typst 自动传入。后续全局排版规则和模块组装可在此函数中扩展。
+`report(preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto, body)` 是模板入口，接收配置集名称、基础配置覆盖值和正文。通过 `#show: report.with(...)` 使用，`body` 由 Typst 自动传入。配置集注册和全局排版规则均在此文件维护。
 
 底层模块也可以单独导入使用；使用 `report` 时不需要重复应用它们：
 

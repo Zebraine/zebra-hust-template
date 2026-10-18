@@ -5,6 +5,11 @@
 #import "modules/outline.typ": outline_with_sizes
 #import "modules/references.typ": references-page
 #import "modules/appendix.typ": appendix-pages
+#import "presets/course-report.typ": course-report
+
+#let presets = (
+  "course-report": course-report,
+)
 
 #let font_config = (
   latin: "TeX Gyre Termes",
@@ -32,7 +37,14 @@
   size: 18pt,
 )
 
-#let report(cover: (:), outline: (depth: 3, font_sizes: (12pt, 12pt, 12pt)), references: (:), appendices: (), body) = {
+#let report(preset: "course-report", cover: (:), outline: (:), references: (:), appendices: auto, body) = {
+  assert(preset in presets, message: "未知配置集：" + preset)
+  let defaults = presets.at(preset)
+  let cover = defaults.cover + cover
+  let outline = defaults.outline + outline
+  let references = defaults.references + references
+  let appendices = if appendices == auto { defaults.appendices } else { appendices }
+
   show: page-setup.with(..page_config)
   show: figure_setup.with(font: (font_config.latin, font_config.hei))
   show: code_setup
